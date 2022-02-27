@@ -83,9 +83,9 @@ fn main() {
 
     println!("{}", returns_summarizable().summarize());
 }
-pub trait Display{}
 
 use std::fmt::Debug;
+use std::fmt::Display;
 
 // JUST SOME EXAMPLE OF GENERIC USAGE IN TRAIT
 pub fn notify2_param(item1: &(impl Summary + Display), item2: &impl Summary){
@@ -103,4 +103,28 @@ pub fn some_function2<T, U> (t: &T, u: &U) -> i32
 {
     // ...
     return 1;
+}
+
+
+// Conditionally implement Methods
+
+struct Pair<T> {
+    x: T,
+    y: T,
+}
+
+impl<T> Pair<T> {
+    fn new(x: T, y: T ) -> Self {
+        Self { x, y}
+    }
+}
+
+impl <T: Display + PartialOrd> Pair<T> {
+    fn cmp_display(&self){
+        if self.x >= self.y {
+            println!("The largest member is x = {}", self.x);
+        }else {
+            println!("The largest member is y = {}", self.y);
+        }
+    }
 }
