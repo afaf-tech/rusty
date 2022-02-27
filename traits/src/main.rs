@@ -51,6 +51,17 @@ pub fn notify<T: Summary>(item: &T){
     println!("Breaking news! {}", item.summarize());
 }
 
+
+// returning types the implement traits
+fn returns_summarizable() -> impl Summary {
+    Tweet { 
+        username: String::from("horse_eboks"),
+        content: String::from("of course, as you probably already know, people"),
+        reply: false,
+        retweet: false,
+    }
+}
+
 fn main() {
     let tweet = Tweet{
         username: String::from("@johndoe"),
@@ -68,7 +79,9 @@ fn main() {
     println!("Tweet summary : {}", tweet.summarize());
     println!("Article summary : {}", article.summarize());
 
-    notify(&article)
+    notify(&article);
+
+    println!("{}", returns_summarizable().summarize());
 }
 pub trait Display{}
 
