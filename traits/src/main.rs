@@ -1,3 +1,4 @@
+// Note: Traits are similar to a feature often called interfaces in other languages, although with some differences.
 pub struct NewsArticle { 
     pub author: String,
     pub headline: String,
@@ -41,6 +42,15 @@ pub trait Summary {
     }
 }
 
+// pub fn notify(item: &impl Summary){
+//     println!("Breaking news! {}", item.summarize());
+// }
+
+// this generic is limited to something that implements the summary trait
+pub fn notify<T: Summary>(item: &T){
+    println!("Breaking news! {}", item.summarize());
+}
+
 fn main() {
     let tweet = Tweet{
         username: String::from("@johndoe"),
@@ -58,4 +68,26 @@ fn main() {
     println!("Tweet summary : {}", tweet.summarize());
     println!("Article summary : {}", article.summarize());
 
+    notify(&article)
+}
+pub trait Display{}
+
+use std::fmt::Debug;
+
+// JUST SOME EXAMPLE OF GENERIC USAGE IN TRAIT
+pub fn notify2_param(item1: &(impl Summary + Display), item2: &impl Summary){
+    //...
+}
+
+pub fn some_function<T: Display + Clone, U: Clone + Debug > (t: &T, u: &U) -> i32 {
+    //...
+    return 1;
+}
+
+pub fn some_function2<T, U> (t: &T, u: &U) -> i32 
+    where T: Display + Clone,
+          U : Clone + Debug
+{
+    // ...
+    return 1;
 }
