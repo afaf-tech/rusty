@@ -14,6 +14,42 @@ fn main() {
     println!("The longest string i {}", result);
 
 
+    #[derive(Debug)] // add this to debug
+    struct ImportantExcerpt<'a>{
+        part: &'a str,
+    }
+    
+
+    let novel = String::from("Call me Kata, Some years ago...");
+    let first_sentence = novel.split('.').next().expect("Coulnd't find any novel");
+
+    let i;
+    {
+       i =  ImportantExcerpt{
+           part: first_sentence
+       };
+    }
+    
+    println!("{:?}", i);
+
+}
+
+// 1. Each parameter that is a reference gets its own lifetime parameter
+// 2. If there is exactly one input lifetime parameter, that lifetime is assigned to all output
+        // lifetime parameter
+// 3. If there are multiple input lifetime parameters, but one of them is &self or &mut lef the lifetime of self is 
+        // assigned to all output lifetime parameters.
+
+fn first_word<'a>( s: &'a str) -> &'a str{
+    let bytes = s.as_bytes();
+
+    for( i , &item ) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+
+    &s[..]
 }
 
 // &i32     // a reference
