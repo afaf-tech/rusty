@@ -34,6 +34,23 @@ fn main() {
 
 }
 
+use std::fmt::Display;
+fn longest_with_an_announcement<'a, T> (
+    x: &'a str,
+    y: &'a str,
+    ann: T,
+) -> &'a str 
+where 
+    T: Display,
+{
+    println!("Announcement! {}", ann);
+    if x.len() > y.len() {
+        x
+    }else {
+        y
+    }
+}
+
 // 1. Each parameter that is a reference gets its own lifetime parameter
 // 2. If there is exactly one input lifetime parameter, that lifetime is assigned to all output
         // lifetime parameter
