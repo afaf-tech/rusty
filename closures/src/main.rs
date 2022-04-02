@@ -13,12 +13,45 @@ fn main() {
     generate_workout(simulated_intensity, random_number);
 }
 
+struct Cacher<T>
+where 
+    T: Fn(u32) -> u32,
+{
+    calculation: T,
+    value: Option<u32>,
+}
+
+impl<T> Cacher<T>
+where 
+    T: Fn(u32) -> u32,
+{   
+    // constructor function
+    fn new(calculation: T) -> Cacher<T> {
+        Cacher{
+            calculation,
+            value: None,
+        }
+    }
+
+
+    fn value(&mut self, arg: u32) -> u32 {
+        match self.value {
+            Some(v) => v,
+            None => {
+                let v = (self.calculation)(arg);
+                self.value = Some(v); // caching happens here
+                v
+            }
+        }
+    }
+}
+
 fn generate_workout(intensity: u32, random_number: u32){
-    let expensive_result = |num | -> u32 {
+    let mut cached_result = Cacher::new(|num | -> u32 {
         println!("calculating slowly...");
         thread::sleep(Duration::from_secs(2));
         num
-    };
+    });
 
     // let example_closure = |x  | x;
 
@@ -28,11 +61,11 @@ fn generate_workout(intensity: u32, random_number: u32){
     if intensity < 25 {
         println!(
             "Today, do {} pushups!",
-            expensive_result(intensity)
+            cached_result.value(intensity)
         );
         println!(
             "Next, do {} situps!",
-            expensive_result(intensity)
+            cached_result.value(intensity)
         );
     } else {
         if random_number == 3{
@@ -40,7 +73,7 @@ fn generate_workout(intensity: u32, random_number: u32){
         }else {
             println!(
                 "Today, Run for {} minutes!",
-                expensive_result(intensity)
+                cached_result.value(intensity)
             );
         }
     }
