@@ -11,6 +11,28 @@ fn main() {
     let simulated_intensity = 10;
     let random_number = 32;
     generate_workout(simulated_intensity, random_number);
+
+    //  capturing env with closure
+    let x = 4;
+    let equal_to_x = |z| z == x;
+    // fn equal_to_x(z: u32) -> bool{
+    //     z == x // x id undefined because fn can't capture the environment
+    // }
+
+    let y = 4;
+    
+    assert!(equal_to_x(y));
+
+    // FnOnce, FnMut, Fn
+    let q = vec![1, 2, 3];
+
+    let equal_to_q = |z: Vec<i32>| z== q;
+
+    println!("can't use q here: {:?}", q);
+
+    let y = vec![1, 2, 3];
+
+    assert!(equal_to_q(y));
 }
 
 struct Cacher<T>
