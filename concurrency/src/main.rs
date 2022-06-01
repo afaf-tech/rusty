@@ -31,5 +31,6 @@ fn main() {
     handle.join().unwrap(); 
     
     channel::main_channel();
-    channel::main_channel_multiple_values();
+    // channel::main_channel_multiple_values();
+    channel::main_channel_multiple_thread();
 }
