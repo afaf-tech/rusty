@@ -1,6 +1,8 @@
 use std::thread;
 use std::time::Duration;
 
+mod channel;
+
 fn main() {
     // let handle = thread::spawn(move || {
     //     for i in 0..10 {
@@ -28,5 +30,6 @@ fn main() {
     //Calling join on the handle blocks the thread currently running until the thread represented by the handle terminates
     handle.join().unwrap(); 
     
-
+    channel::main_channel();
+    channel::main_channel_multiple_values();
 }
