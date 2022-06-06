@@ -2,6 +2,7 @@ use std::thread;
 use std::time::Duration;
 
 mod channel;
+mod mutex;
 
 fn main() {
     // let handle = thread::spawn(move || {
@@ -33,4 +34,7 @@ fn main() {
     channel::main_channel();
     // channel::main_channel_multiple_values();
     channel::main_channel_multiple_thread();
+
+    mutex::mutex_single_threaded();
+    mutex::mutex_multiple_threads();
 }
